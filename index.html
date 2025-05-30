@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Viewer with Text Marking</title>
+    <link rel="stylesheet" href="./src/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="header-left">
+                <h1>PDF Viewer</h1>
+                <div class="file-controls">
+                    <input type="file" id="fileInput" accept=".pdf" class="file-input">
+                    <label for="fileInput" class="file-label">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14,2 14,8 20,8"></polyline>
+                        </svg>
+                        Open
+                    </label>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <div class="page-controls">
+                    <button id="prevPage" class="btn btn-icon" title="Previous Page">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15,18 9,12 15,6"></polyline>
+                        </svg>
+                    </button>
+                    <div class="page-input-container">
+                        <input type="number" id="pageInput" class="page-input" min="1" value="1">
+                        <span class="page-separator">of</span>
+                        <span id="totalPages">1</span>
+                    </div>
+                    <button id="nextPage" class="btn btn-icon" title="Next Page">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9,18 15,12 9,6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="zoom-controls">
+                    <button id="zoomOut" class="btn btn-icon" title="Zoom Out">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="M21 21l-4.35-4.35"></path>
+                            <line x1="8" y1="11" x2="14" y2="11"></line>
+                        </svg>
+                    </button>
+                    
+                    <div class="zoom-selector">
+                        <select id="zoomSelect" class="zoom-select">
+                            <option value="auto">Fit Width</option>
+                            <option value="page-fit">Fit Page</option>
+                            <option value="0.5">50%</option>
+                            <option value="0.75">75%</option>
+                            <option value="1" selected>100%</option>
+                            <option value="1.25">125%</option>
+                            <option value="1.5">150%</option>
+                            <option value="2">200%</option>
+                            <option value="3">300%</option>
+                            <option value="4">400%</option>
+                        </select>
+                    </div>
+                    
+                    <button id="zoomIn" class="btn btn-icon" title="Zoom In">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="M21 21l-4.35-4.35"></path>
+                            <line x1="8" y1="11" x2="14" y2="11"></line>
+                            <line x1="11" y1="8" x2="11" y2="14"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <div class="tool-controls">
+                    <button id="debugToggle" class="btn btn-tool" title="Debug Mode">Debug</button>
+                    <button id="enhancedSelection" class="btn btn-tool" title="Enhanced Selection">Enhanced</button>
+                    <button id="recalculateTextLayer" class="btn btn-tool" title="Recalculate Text Layer">Recalc</button>
+                </div>
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <div class="sidebar">
+                <h3>Marked Text</h3>
+                <div id="markedTextList" class="marked-text-list">
+                    <p class="empty-state">No text marked yet. Select text in the PDF to mark it.</p>
+                </div>
+                <button id="clearMarked" class="btn btn-secondary">Clear All</button>
+            </div>
+            
+            <div class="pdf-container" id="viewerContainer">
+                <div id="loadingIndicator" class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading PDF...</p>
+                </div>
+                <div id="viewer" class="pdf-viewer"></div>
+                <div id="dropZone" class="drop-zone">
+                    <div class="drop-content">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14,2 14,8 20,8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10,9 9,9 8,9"></polyline>
+                        </svg>
+                        <h3>Drop PDF file here</h3>
+                        <p>or click "Open" to browse</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <div id="tooltip" class="tooltip"></div>
+    </div>
+    
+    <script src="/viewer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html> 
